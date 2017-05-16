@@ -18,7 +18,7 @@ namespace Pacman
            
             // Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
-            var form = new GameForm(LevelFactory.Levels);
+            var form = new GameForm();
             Application.Run(form);
         }
     }

@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Pacman;
 
 namespace Pacmam
 {
     public partial class LooserForm : Form
     {
-        public LooserForm()
+        public LooserForm(GameForm source)
         {
             ClientSize = new Size(500, 665);
             var table = new TableLayoutPanel();
@@ -30,13 +31,15 @@ namespace Pacmam
                 Dock = DockStyle.Fill,
                 Bounds = new Rectangle(0, 550, 500, 50)
             };
+            buttonRepeat.Click += (sender, args) => {source.RepeatLevel(); source.Show(); this.Close(); };
 
-            var buttonQuit = new Button()
+            var buttonQuit = new Button
             {
                 Text = "Quit game",
                 Dock = DockStyle.Fill,
                 Bounds = new Rectangle(0, 600, 500, 50)
             };
+            buttonQuit.Click += (sender, args) => source.Close();
 
             table.RowStyles.Clear();
             table.Controls.Add(label);

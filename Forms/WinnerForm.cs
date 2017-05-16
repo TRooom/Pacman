@@ -14,13 +14,12 @@ namespace Pacman
     public partial class WinnerForm : Form
     {
 
-        Bitmap animatedImage = new Bitmap(@"C:\Users\1\Desktop\хакер-хуякер\sharp\Pacman\Pacman\images\гифф.gif"); //500x500 pix
+        Bitmap animatedImage = new Bitmap(@"C:\Users\DrRoo\Documents\Visual Studio 2015\Projects\Pacman\Pacman\images\гифф.gif"); //500x500 pix
         bool currentlyAnimating = false;
         public Level Level;
 
-        public WinnerForm(Level level)
+        public WinnerForm(GameForm source)
         {
-            Level = level;
             InitializeComponent();
             ClientSize = new Size(500, 665);
             var table = new TableLayoutPanel();
@@ -38,7 +37,7 @@ namespace Pacman
                 Dock = DockStyle.Fill,
                 Bounds = new Rectangle(0, 500, 500, 50),                
             };
-          //  buttonNextLevel.Click += (sender, args) => ChangeLevel(level);
+            buttonNextLevel.Click += (sender, args) => { source.NextLevel();source.Show(); Close(); };
 
             var buttonRepeat = new Button
             {
@@ -46,6 +45,7 @@ namespace Pacman
                 Dock = DockStyle.Fill,
                 Bounds = new Rectangle(0, 550, 500, 50)
             };
+            buttonRepeat.Click += (sender, args) => { source.RepeatLevel();source.Show(); this.Close(); };
 
             var buttonQuit = new Button()
             {
@@ -53,6 +53,7 @@ namespace Pacman
                 Dock = DockStyle.Fill,
                 Bounds = new Rectangle(0, 600, 500, 50)
             };
+            buttonQuit.Click += (sender, args) => source.Close();
 
             table.RowStyles.Clear();
             table.Controls.Add(label);

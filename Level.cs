@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,36 +14,24 @@ namespace Pacman
     {
         public Keys KeyPressed { get; set; }
         public string Name;
-        public readonly Monster[] Monsters;//Информация об этом есть в Map
-        public readonly Player Player;//Информация об этом есть в Map
         public ICreature[,] Map { get; set; }
         public static readonly int MapWidth = 30;
         public static readonly int MapHeight = 15;
         public readonly int NumberOfCoins;
         public Image LevelImage;
-        public bool IsCompleted => NumberOfCoins == Game.Scores;
+        private readonly Func<Level,ICreature[,]> init;
 
-        public Level(string name, Point playerLocation, ICreature[,] map, int numberOfCoins, params Point[] monstersLocation )
+        public Level(string name, int numberOfCoins, Func<Level,ICreature[,]> init)
         {
+            this.init = init;
+            Map = init(this);
             Name = name;
-            //LevelImage = leveImage;
             NumberOfCoins = numberOfCoins;
-            Player = new Player(this) {Location = playerLocation};
-            Monsters = new Monster[monstersLocation.Length];
-            for (var i = 0; i < Monsters.Length; i++)
-                Monsters[i] = new Monster(this) {Location = monstersLocation[i]};
-
-            //прорисовка карты
-            Map = map;
-            Map[Player.Location.X, Player.Location.Y] = Player;
-            for (var i = 0; i < Monsters.Length; i++)
-                Map[Monsters[i].Location.X, Monsters[i].Location.Y] = Monsters[i];
-
         }
 
         public void Reset()
         {
-            
+            Map = init(this);
         }
     }
 }

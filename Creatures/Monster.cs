@@ -60,7 +60,7 @@ namespace Pacman
 
         public bool DeadInConflict(ICreature conflictedObject)
         {
-            return false;
+            return conflictedObject is Monster;
         }
     }
 }
